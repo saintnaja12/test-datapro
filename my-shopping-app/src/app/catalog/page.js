@@ -21,7 +21,6 @@ export default function Catalog() {
     async function fetchData() {
         setIsLoading(true)
         const response = await fetchProducts()
-        console.log("🚀 ~ fetchData ~ response:", response)
         if(response){
             setIsLoading(false)
             setProducts(response)
