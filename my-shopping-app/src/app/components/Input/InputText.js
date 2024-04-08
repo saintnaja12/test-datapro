@@ -11,7 +11,6 @@ const InputText = ({ name, inputLbl, rules, error }) => {
     const [isFocus, setIsFocus] = useState(false);
     const isError = errors[name];
 
-    // Handling changes and validations
     const handleOnChange = (value) => {
         let result = value;
         if (rules.isTextOnly) {
