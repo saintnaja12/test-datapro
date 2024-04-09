@@ -1,5 +1,5 @@
 class Product {
-    constructor({ id, title, price, description, image, category, rating, selected }) {
+    constructor({ id, title, price, description, image, category, rating, quantity }) {
         this.id = id;
         this.title = title;
         this.price = price;
@@ -7,7 +7,7 @@ class Product {
         this.image = image;
         this.category = category;
         this.rating = rating;
-        this.selected = selected ? selected : false;
+        this.quantity = quantity ? quantity : 0
     }
 
     getFormattedPrice() {
