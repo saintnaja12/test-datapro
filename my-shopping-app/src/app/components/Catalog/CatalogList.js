@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 // store
 import useStore from '../../../store'
 // component
@@ -21,20 +22,16 @@ const CatalogList = () => {
 
     const add = (data) => {
         const updatedProducts = products.map(product =>
-            product.id === data.id ? new Product({ ...product, selected: true }) : product
+            product.id === data.id ? new Product({ ...product }) : product
         );
         setProducts(updatedProducts);
         addToCart(data)
         setProductList(updatedProducts)
-    };
-
-    const remove = (data) => {
-        const updatedProducts = products.map(product =>
-            product.id === data.id ? new Product({ ...product, selected: false }) : product
-        );
-        setProducts(updatedProducts);
-        removeFromCart(data)
-        setProductList(updatedProducts)
+        Swal.fire({
+            title: `Added ${data.title} to cart.`,
+            confirmButtonColor: "#ee361f",
+            confirmButtonText: "OK",
+        })
 
     };
 
@@ -47,7 +44,7 @@ const CatalogList = () => {
             {
                 productList.length > 0
                 ? productList.map((product, idx) => (
-                    <div key={product.id} className="mb-4 bg-white p-4 flex gap-3 max-w-500px rounded-10">
+                    <div key={product.id} className="bg-white p-4 flex items-center gap-3 rounded-10">
                         <img className="object-contain aspect-square max-h-[160px] rounded-5 border border-a-gray-F4F4F4" src={product.image} alt={product.title} />
                         <div className="w-full flex flex-col gap-2">
                             <div className="text-16 text-a-black-333333 font-semibold h-12 line-clamp-2">{product.title}</div>
@@ -58,7 +55,7 @@ const CatalogList = () => {
                             <div className="flex justify-between items-center gap-4">
                                 <div className="text-14 text-a-black-333333 font-semibold">{product.getFormattedPrice()}</div>
                             </div>
-                            <div className='flex items-end gap-1'>
+                            <div className='flex flex-col tablet-sm:flex-row items-start tablet-sm:items-end gap-1'>
                                 <StarRatings
                                     starRatedColor="#ee361f"
                                     rating={product.rating.rate}
@@ -69,30 +66,18 @@ const CatalogList = () => {
                                     {product.rating.count} pieces sold
                                 </div>
                             </div>
-                            {
-                                product.selected ? (
-                                    <Button
-                                        onClick={() => remove(product)}
-                                        customClass={`mt-1 rounded-full py-1 px-3 text-14 font-semibold h-[40px] text-a-primary-ee361f bg-white border border-a-primary-ee361f hover:bg-a-bg-F7F9F9 duration-200`}
-                                    >
-                                        Remove from cart
-                                    </Button>
-                                )
-                                : (
-                                    <Button
-                                        onClick={() => add(product)}
-                                        customClass={`mt-1 rounded-full py-1 px-3 text-14 font-semibold h-[40px] text-white bg-a-primary-ee361f hover:bg-a-primary-ff6653 duration-200`}
-                                    >
-                                        Add to cart
-                                    </Button>
-                                )
-                            }
+                            <Button
+                                onClick={() => add(product)}
+                                customClass={`mt-1 rounded-full py-1 px-3 text-14 font-semibold h-[40px] text-white bg-a-primary-ee361f hover:bg-a-primary-ff6653 duration-200`}
+                            >
+                                Add to cart
+                            </Button>
                         </div>
                     </div>
                 ))
-                : <>
+                : <div className='text-center'>
                     No Item
-                </>
+                </div>
             }
         </>
     )

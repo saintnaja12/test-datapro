@@ -33,10 +33,10 @@ export default function Catalog() {
 
     return (
         <ProtectedRoute>
-            <main className="flex min-h-screen flex-col items-center justify-between ">
-                <Loading isShowing={isLoading} />
-                <NavBar title="Shopping App" />
-                <div className='mt-[72px]'>
+            <Loading isShowing={isLoading} />
+            <NavBar title="Shopping App" />
+            <main className="flex min-h-screen flex-col mx-auto container">
+                <div className='my-[72px] mx-5 grid desktop-lg:grid-cols-3 laptop-lg:grid-cols-2 tablet-lg:grid-cols-1 gap-5'>
                     <CatalogList />
                 </div>
             </main>
